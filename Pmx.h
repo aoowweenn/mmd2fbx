@@ -36,6 +36,7 @@ namespace Pmx
 
     Vertex();
     void read();
+    std::pair<Vector3, Vector3> calc_sdef_rw();
   };
 
   enum MaterialFlag
@@ -93,6 +94,39 @@ namespace Pmx
 			AfterPhysics = 1 << 12,
 			ExtParent = 1 << 13,
   };
+
+  struct IKLink
+  {
+    int bone;
+    bool is_limit;
+    Vector3 low, high;
+
+    IKLink();
+    void read();
+  };
+
+  struct IK
+  {
+    int target, n_loops;
+    float angle;
+    std::vector<IKLink> link_list;
+
+    IK();
+    read();
+  }
+
+  struct Bone
+  {
+    std::string name, name_en;
+    Vector3 pos, rel_pos, end_offset, axis;
+    Vecotr3 local_x, local_y, local_z;
+    int parent, level, end_bone, append_parent, ext_key;
+    float append_ratio;
+    BoneFlag flag;
+    IK ik;
+    Bone *ref_parent;
+    
+  }
 }
 
 #endif
